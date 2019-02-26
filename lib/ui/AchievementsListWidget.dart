@@ -1,28 +1,16 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/data/Achievement.dart';
-import 'package:flutter_app/data/User.dart';
-import 'package:flutter_app/services/AchievementService.dart';
+import 'package:flutter_app/data/CivGameInfo.dart';
 import 'package:flutter_app/ui/AchievementWidget.dart';
 
 class AchievementState extends State<AchievementListWidget> {
-  final CivAchievementService _service = CivAchievementService();
-  List<Widget> _cheevoList;
-
-  AchievementState() {
-    _cheevoList = new List<Widget>();
-  }
-
-  @override
-  void initState() {
-    _generateCheevoList();
-    super.initState();
-  }
 
   _buildList(AchievementList list) {
     List<Widget> content = [];
     for (Achievement cheevo in list.achievements) {
       content.add(AchievementWidget(cheevo: cheevo));
+      //content.add(Text("test1"));
     }
 
     return content;
@@ -44,51 +32,25 @@ class AchievementState extends State<AchievementListWidget> {
     );
   }
 
-  void _generateCheevoList() {
-    _cheevoList.add(_generateAchievementListWidget(_service.fetchUnlockedAchievements(widget.user)));
-    _cheevoList.add(_generateAchievementListWidget(_service.fetchLockedAchievements(widget.user)));
-  }
-
   @override
   Widget build(BuildContext context) {
-    if (_cheevoList.length > 0) {
-      return Scaffold(
-        appBar: AppBar(title: Text("Cheevo App")),
-        body: ListView.builder(
-          itemCount: _cheevoList.length,
-            itemBuilder: (context, i) {
-              return ExpansionTile(
-                title: Text("Achievements"),
-                children: <Widget>[
-                  Column(
-                    children: _cheevoList[i]
-                  )
-                ],
-              );
-            }
-        ),
-//        body: Column(
-//          children: <Widget>[
-//            Center(
-//              child: Expanded(
-//                child: ListView.builder(
-//                    itemCount: _cheevoList.length,
-//                    itemBuilder: (context, i) {
-//                      return _cheevoList[i];
-//                    }),
-//              ),
-//            )
-//
-//          ],
-//        ),
-      );
-    } else {
-      return Scaffold(
-        appBar: AppBar(title: Text("Cheevo App")),
-        body: CircularProgressIndicator(),
-      );
-    }
-
+    return Scaffold(
+      appBar: AppBar(title: Text("Cheevo App")),
+      body: ListView.builder(
+          itemCount: 3,
+          itemBuilder: (context, i) {
+            return ExpansionTile(
+              title: Text(widget.gameInfo[i].title),
+              initiallyExpanded: widget.gameInfo[i].expanded,
+              children: <Widget>[
+                Column(
+                    children: _buildList(widget.gameInfo[i])
+                )
+              ],
+            );
+          }
+      ),
+    );
   }
 
   FutureBuilder<AchievementList> _cheevoFuture(Future<AchievementList> future) {
@@ -152,9 +114,9 @@ class AchievementState extends State<AchievementListWidget> {
 }
 
 class AchievementListWidget extends StatefulWidget {
-  final User user;
+  final CivGameInfo gameInfo;
 
-  const AchievementListWidget({Key key, this.user}) : super(key: key);
+  const AchievementListWidget({Key key, this.gameInfo}) : super(key: key);
 
   @override
   AchievementState createState() => new AchievementState();

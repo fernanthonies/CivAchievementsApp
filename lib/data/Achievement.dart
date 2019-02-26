@@ -19,9 +19,11 @@ class Achievement {
 }
 
 class AchievementList {
+  String title;
+  bool expanded;
   final List<Achievement> achievements;
 
-  AchievementList({this.achievements});
+  AchievementList({this.title, this.achievements, this.expanded});
 
   factory AchievementList.fromJson(List<dynamic> json) {
     List<Achievement> achievements = json.map((a) => Achievement.fromJson(a)).toList();

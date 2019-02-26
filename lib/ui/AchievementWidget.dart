@@ -24,8 +24,8 @@ class AchievementState extends State<AchievementWidget> {
       child: Container(
         padding: EdgeInsets.all(8.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          //crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(widget.cheevo.title,
                 textAlign: TextAlign.center,
@@ -44,14 +44,13 @@ class AchievementState extends State<AchievementWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        child: Row(
-          children: <Widget>[
-            _leftSection(),
-            _rightSection()
-          ],
-        ),
+    return Container(
+      padding: EdgeInsets.all(5.0),
+      child: Row(
+        children: <Widget>[
+          _leftSection(),
+          _rightSection()
+        ],
       ),
     );
   }
