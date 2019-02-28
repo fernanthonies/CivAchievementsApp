@@ -3,9 +3,12 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_app/data/User.dart';
 
 class UserService {
+
+  final String apiUrl = "http://api.fernanthonies.com:8080";
+
   Future<User> fetchSteamUser(String userName) async {
     final userResponse = await http.get(
-        "http://localhost:8080/user/$userName/userId",
+        "$apiUrl/user/$userName/userId",
         headers: {"Accept": "application/json"});
 
     if (userResponse.statusCode == 200) {

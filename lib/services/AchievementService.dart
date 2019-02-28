@@ -5,9 +5,11 @@ import 'package:flutter_app/data/Achievement.dart';
 
 class CivAchievementService {
 
+  final String apiUrl = "http://api.fernanthonies.com:8080";
+
   Future<AchievementList> fetchSuggestedAchievements(User user) async {
     final cheevoResponse = await http.get(
-        "http://localhost:8080/achievements/civ6/suggested?userId=${user.id}",
+        "$apiUrl/achievements/civ6/suggested?userId=${user.id}",
         headers: {"Accept": "application/json"});
 
     if (cheevoResponse.statusCode == 200) {
@@ -23,7 +25,7 @@ class CivAchievementService {
   Future<AchievementList> fetchUnlockedAchievements(User user) async {
 
     final cheevoResponse = await http.get(
-        "http://localhost:8080/achievements/civ6/unlocked?userId=${user.id}",
+        "$apiUrl/achievements/civ6/unlocked?userId=${user.id}",
         headers: {"Accept": "application/json"});
 
     if (cheevoResponse.statusCode == 200) {
@@ -38,7 +40,7 @@ class CivAchievementService {
 
   Future<AchievementList> fetchLockedAchievements(User user) async {
     final cheevoResponse = await http.get(
-        "http://localhost:8080/achievements/civ6/locked?userId=${user.id}",
+        "$apiUrl/achievements/civ6/locked?userId=${user.id}",
         headers: {"Accept": "application/json"});
 
     if (cheevoResponse.statusCode == 200) {
